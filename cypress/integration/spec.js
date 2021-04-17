@@ -70,8 +70,15 @@ describe('TodoMVC app', () => {
         .find('label')
         .should('contain', TODO_ITEM_THREE)
     })
-    it('trims text input')
-    it('shows the filters and actions after adding a todo')
+    it('trims text input', () => {
+      createTodo(`    ${TODO_ITEM_ONE}    `)
+      cy.get('.todo-list li').eq(0).should('have.text', TODO_ITEM_ONE)
+    })
+    it('shows the filters and actions after adding a todo', () => {
+      createTodo(TODO_ITEM_ONE)
+      cy.get('.main').should('be.visible')
+      cy.get('.footer').should('be.visible')
+    })
   })
   context('completing all todos', () => {
     beforeEach(() => {

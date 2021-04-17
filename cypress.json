@@ -2,6 +2,6 @@
   "baseUrl": "http://localhost:8888",
   "fixturesFolder": false,
   "pluginsFile": false,
-  "ignoreTestFiles": ["copy.js", "utils.js"],
+  "ignoreTestFiles": ["utils.js"],
   "projectId": "9g2jiu"
 }
