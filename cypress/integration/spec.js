@@ -251,12 +251,39 @@ describe('TodoMVC app', () => {
     })
   })
   context('counter', () => {
-    it('shows the current number of todos')
+    it('shows the current number of todos', () => {
+      createTodo(TODO_ITEM_ONE)
+      cy.get('.todo-count').contains('1 item left')
+      createTodo(TODO_ITEM_TWO)
+      cy.get('.todo-count').contains('2 items left')
+    })
   })
   context('clear completed todos', () => {
-    it('shows the right text')
-    it('should remove completed todos')
-    it('is hidden if there are no completed todos')
+    beforeEach(() => {
+      createDefaultTodos().as('todos')
+    })
+
+    it('shows the right text', () => {
+      cy.get('@todos').eq(0).find('.toggle').check()
+
+      cy.get('.clear-completed').contains('Clear completed')
+    })
+    it('should remove completed todos', () => {
+      cy.get('@todos').eq(1).find('.toggle').check()
+
+      cy.get('.clear-completed').click()
+      cy.get('@todos').should('have.length', 2)
+      cy.get('@todos').eq(0).should('contain', TODO_ITEM_ONE)
+
+      cy.get('@todos').eq(1).should('contain', TODO_ITEM_THREE)
+    })
+    it('is hidden if there are no completed todos', () => {
+      cy.get('@todos').eq(1).find('.toggle').check()
+
+      cy.get('.clear-completed').should('be.visible').click()
+
+      cy.get('.clear-completed').should('not.exist')
+    })
   })
   context('persistence', () => {
     it('saves the todos data and state')
