@@ -7,7 +7,9 @@
     "start": "http-server -p 8888 -c-1",
     "start:ci": "http-server -p 8888 -c-1 --silent",
     "test": "cypress open",
-    "dev": "start-test start:ci 8888"
+    "dev": "start-test start:ci 8888",
+    "ci": "start-test start:ci 8888 cy:run",
+    "cy:run": "cypress run"
   },
   "dependencies": {
     "director": "1.2.8",
