@@ -1,0 +1,15 @@
+name: ci
+on: [push]
+jobs:
+  cypress-run:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout 🛎
+        uses: actions/checkout@v1
+      - name: Run E2E tests 🧪
+        uses: cypress-io/github-action@v2
+        with:
+          start: "npm run start:ci"
+          wait-on: "http://localhost:8888"
+
+
