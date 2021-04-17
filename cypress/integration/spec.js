@@ -1,15 +1,17 @@
 /// <reference types="cypress" />
 
 describe('TodoMVC app', () => {
+  beforeEach(() => {
+    cy.visit('/')
+  })
+
   context('on start', () => {
     it('sets the focus on the todo input field', () => {
-      cy.visit('/')
       cy.focused().should('have.class', 'new-todo')
     })
   })
   context('without todos', () => {
     it('hides any filters and actions', () => {
-      cy.visit('/')
       cy.get('.todo-list li').should('not.exist')
       cy.get('.main').should('not.exist')
       cy.get('.footer').should('not.exist')
