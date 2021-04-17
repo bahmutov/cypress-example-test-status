@@ -14,3 +14,12 @@ export const createDefaultTodos = () => {
 
   return cy.get('.todo-list li', options)
 }
+
+export const createTodo = (todo) => {
+  // do not log any commands inside this utility function
+  const options = { log: false }
+
+  // create the todo
+  cy.get('.new-todo', options).type(`${todo}{enter}`, options)
+  return cy.get('.todo-list', options).contains('li', todo.trim(), options)
+}
