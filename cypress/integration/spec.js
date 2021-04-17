@@ -286,7 +286,27 @@ describe('TodoMVC app', () => {
     })
   })
   context('persistence', () => {
-    it('saves the todos data and state')
+    it('saves the todos data and state', () => {
+      function testState() {
+        cy.get('@firstTodo')
+          .should('contain', TODO_ITEM_ONE)
+          .and('have.class', 'completed')
+
+        cy.get('@secondTodo')
+          .should('contain', TODO_ITEM_TWO)
+          .and('not.have.class', 'completed')
+      }
+
+      createTodo(TODO_ITEM_ONE).as('firstTodo')
+      createTodo(TODO_ITEM_TWO).as('secondTodo')
+      cy.get('@firstTodo')
+        .find('.toggle')
+        .check()
+        .then(testState)
+
+        .reload()
+        .then(testState)
+    })
   })
   context('routing', () => {
     it('goes to the active items view')
