@@ -188,11 +188,67 @@ describe('TodoMVC app', () => {
     })
   })
   context('editing todos', () => {
-    it('hides other controls')
-    it('saves edit on blur')
-    it('trims entered text')
-    it('removes todo if text is empty')
-    it('cancels edit on escape')
+    beforeEach(() => {
+      createDefaultTodos().as('todos')
+    })
+
+    it('hides other controls', () => {
+      cy.get('@todos').eq(1).as('secondTodo').find('label').dblclick()
+
+      cy.get('@secondTodo').find('.toggle').should('not.be.visible')
+
+      cy.get('@secondTodo').find('label').should('not.be.visible')
+    })
+    it('saves edit on blur', () => {
+      cy.get('@todos').eq(1).as('secondTodo').find('label').dblclick()
+
+      cy.get('@secondTodo')
+        .find('.edit')
+        .clear()
+        .type('buy some sausages')
+        // we can just send the blur event directly
+        // to the input instead of having to click
+        // on another button on the page. though you
+        // could do that its just more mental work
+        .blur()
+
+      cy.get('@todos').eq(0).should('contain', TODO_ITEM_ONE)
+
+      cy.get('@secondTodo').should('contain', 'buy some sausages')
+      cy.get('@todos').eq(2).should('contain', TODO_ITEM_THREE)
+    })
+    it('trims entered text', () => {
+      cy.get('@todos').eq(1).as('secondTodo').find('label').dblclick()
+
+      cy.get('@secondTodo')
+        .find('.edit')
+        .clear()
+        .type('    buy some sausages    ')
+        .type('{enter}')
+
+      cy.get('@todos').eq(0).should('contain', TODO_ITEM_ONE)
+
+      cy.get('@secondTodo').should('contain', 'buy some sausages')
+      cy.get('@todos').eq(2).should('contain', TODO_ITEM_THREE)
+    })
+    it('removes todo if text is empty', () => {
+      cy.get('@todos').eq(1).as('secondTodo').find('label').dblclick()
+
+      cy.get('@secondTodo').find('.edit').clear().type('{enter}')
+
+      cy.get('@todos').should('have.length', 2)
+    })
+    it('cancels edit on escape', () => {
+      cy.get('@todos').eq(1).as('secondTodo').find('label').dblclick()
+
+      cy.get('@secondTodo').find('.edit').clear().type('foo{esc}')
+
+      cy.get('@todos').eq(0).should('contain', TODO_ITEM_ONE)
+
+      cy.get('@todos').eq(1).should('contain', TODO_ITEM_TWO)
+
+      cy.get('@todos').eq(2).should('contain', TODO_ITEM_THREE)
+    })
   })
   context('counter', () => {
     it('shows the current number of todos')
