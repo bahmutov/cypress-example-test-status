@@ -1,4 +1,5 @@
-# cypress-example-test-status [![ci status][ci image]][ci url] [![cypress-example-test-status](https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/count/9g2jiu&style=for-the-badge&logo=cypress)](https://dashboard.cypress.io/projects/9g2jiu/runs)
+# cypress-example-test-status [![ci status][ci image]][ci url]
+[![cypress-example-test-status](https://img.shields.io/endpoint?url=https://dashboard.cypress.io/badge/count/9g2jiu&style=for-the-badge&logo=cypress)](https://dashboard.cypress.io/projects/9g2jiu/runs)
 > An example application showing the Cypress test statuses
 
 Read these blog posts:
