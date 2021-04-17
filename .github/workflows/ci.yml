@@ -9,7 +9,8 @@ jobs:
       - name: Run E2E tests 🧪
         uses: cypress-io/github-action@v2
         with:
-          start: "npm run start:ci"
-          wait-on: "http://localhost:8888"
-
-
+          start: 'npm run start:ci'
+          wait-on: 'http://localhost:8888'
+          record: true
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
